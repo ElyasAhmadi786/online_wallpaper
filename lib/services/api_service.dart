@@ -31,8 +31,9 @@ class ApiService {
 
   // TODO 20: Search wallpapers by query
   Future<ApiResponse> searchWallpapers(String query, {int page = 1, int perPage = 30}) async {
+    final encodedQuery = Uri.encodeComponent(query);
     final response = await http.get(
-      Uri.parse('$_baseUrl/search?query=$query&per_page=$perPage&page=$page'),
+      Uri.parse('$_baseUrl/search?query=$encodedQuery&per_page=$perPage&page=$page'),
       headers: _headers,
     );
 

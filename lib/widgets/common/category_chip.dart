@@ -52,37 +52,36 @@ class CategoryChip extends StatelessWidget {
 
     return GestureDetector(
       onTap: isLoading ? null : onTap,
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          color: color.withOpacity(isLoading ? 0.1 : 0.2),
+          color: color.withValues(alpha: isLoading ? 0.08 : 0.18),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isLoading ? Colors.grey : color,
-            width: 2,
+            color: isLoading ? Colors.grey.shade700 : color,
+            width: 1.5,
           ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              color: isLoading ? Colors.grey : color,
-              size: 40,
-            ),
-            const SizedBox(height: 12),
+            if (isLoading)
+              const SizedBox(
+                width: 36,
+                height: 36,
+                child: CircularProgressIndicator(strokeWidth: 2.5),
+              )
+            else
+              Icon(icon, color: color, size: 40),
+            const SizedBox(height: 10),
             Text(
               name,
               style: TextStyle(
                 color: isLoading ? Colors.grey : Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
               ),
             ),
-            if (isLoading)
-              const Padding(
-                padding: EdgeInsets.only(top: 8),
-                child: CircularProgressIndicator(),
-              ),
           ],
         ),
       ),

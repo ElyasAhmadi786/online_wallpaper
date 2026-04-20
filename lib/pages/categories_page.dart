@@ -28,7 +28,12 @@ class _CategoriesPageState extends State<CategoriesPage> {
     final provider = Provider.of<AppProvider>(context, listen: false);
 
     try {
-      await provider.loadCategoryWallpapers(query);
+      // "curated" uses the dedicated curated endpoint, not a keyword search
+      if (query == 'curated') {
+        await provider.loadCuratedWallpapers();
+      } else {
+        await provider.loadCategoryWallpapers(query);
+      }
       Navigator.pop(context);
     } catch (e) {
       AppHelpers.showError(context, 'Failed to load category: $e');

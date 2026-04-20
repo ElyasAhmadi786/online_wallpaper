@@ -49,23 +49,8 @@ class FavoriteGrid extends StatelessWidget {
   // TODO 113: Open favorite image in full view
   void _openFavoriteImage(BuildContext context, int index) {
     final provider = Provider.of<AppProvider>(context, listen: false);
-    final favoritePhoto = provider.favorites[index];
-
-    // Find the photo in current list
-    final currentList = provider.getCurrentList();
-    final indexInCurrentList = currentList.indexWhere(
-            (photo) => photo.id == favoritePhoto.id
-    );
-
-    if (indexInCurrentList != -1) {
-      provider.setCurrentIndex(indexInCurrentList);
-      Navigator.pushNamed(context, AppRoutes.fullImage);
-    } else {
-      AppHelpers.showInfo(
-        context,
-        'This wallpaper is from your favorites collection',
-      );
-    }
+    provider.viewFavoriteAtIndex(index);
+    Navigator.pushNamed(context, AppRoutes.fullImage);
   }
 
   @override

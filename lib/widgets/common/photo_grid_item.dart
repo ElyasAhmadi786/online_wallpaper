@@ -27,33 +27,59 @@ class PhotoGridItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Stack(
+        fit: StackFit.expand,
         children: [
           // TODO 84: Image container with cached network image
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Colors.grey[800],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: CachedNetworkImage(
-                imageUrl: photo.src.medium,
-                fit: BoxFit.cover,
-                placeholder: (context, url) => Container(
-                  color: Colors.grey[800],
-                  child: const Center(
-                    child: CircularProgressIndicator(color: Colors.white),
-                  ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: CachedNetworkImage(
+              imageUrl: photo.src.medium,
+              fit: BoxFit.cover,
+              placeholder: (context, url) => Container(
+                color: Colors.grey[800],
+                child: const Center(
+                  child: CircularProgressIndicator(color: Colors.white54),
                 ),
-                errorWidget: (context, url, error) => Container(
-                  color: Colors.grey[800],
-                  child: const Icon(Icons.error, color: Colors.white),
-                ),
+              ),
+              errorWidget: (context, url, error) => Container(
+                color: Colors.grey[800],
+                child: const Icon(Icons.broken_image, color: Colors.white54, size: 40),
               ),
             ),
           ),
 
-          // TODO 85: Favorite button
+          // TODO 85: Bottom gradient for readability
+          if (showPhotographer && photo.photographer.isNotEmpty)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(bottom: Radius.circular(12)),
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(10, 24, 10, 8),
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [Colors.black87, Colors.transparent],
+                    ),
+                  ),
+                  child: Text(
+                    photo.photographer,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+            ),
+
+          // TODO 86: Favorite button
           Positioned(
             top: 8,
             right: 8,
@@ -73,31 +99,6 @@ class PhotoGridItem extends StatelessWidget {
               ),
             ),
           ),
-
-          // TODO 86: Photographer name
-          if (showPhotographer && photo.photographer.isNotEmpty)
-            Positioned(
-              bottom: 8,
-              left: 8,
-              right: 8,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.black54,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  photo.photographer,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ),
         ],
       ),
     );

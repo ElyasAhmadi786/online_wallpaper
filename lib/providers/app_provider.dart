@@ -54,6 +54,8 @@ class AppProvider with ChangeNotifier {
         return _spaceWallpapers;
       case 'search':
         return _searchWallpapers;
+      case 'favorites':
+        return _favorites;
       default:
         return _photos;
     }
@@ -220,6 +222,13 @@ class AppProvider with ChangeNotifier {
   void clearCategory() {
     _currentCategory = 'curated';
     _searchQuery = '';
+    notifyListeners();
+  }
+
+  // TODO 51b: Open a favorite photo in full-screen view
+  void viewFavoriteAtIndex(int index) {
+    _currentCategory = 'favorites';
+    _currentIndex = index;
     notifyListeners();
   }
 
