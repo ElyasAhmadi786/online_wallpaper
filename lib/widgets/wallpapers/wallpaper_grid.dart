@@ -50,6 +50,11 @@ class _WallpaperGridState extends State<WallpaperGrid> {
       _currentPage = 1;
       _lastCategory = currentCategory;
     }
+
+    // Keep search query in sync with provider
+    if (provider.searchQuery.isNotEmpty) {
+      _lastSearchQuery = provider.searchQuery;
+    }
   }
 
   @override
@@ -73,6 +78,9 @@ class _WallpaperGridState extends State<WallpaperGrid> {
     final provider = Provider.of<AppProvider>(context, listen: false);
     final currentCategory = provider.currentCategory;
 
+    // Favorites are fully local — no API pagination needed
+    if (currentCategory == 'favorites') return;
+
     setState(() {
       _isLoadingMore = true;
     });
@@ -83,14 +91,11 @@ class _WallpaperGridState extends State<WallpaperGrid> {
       if (currentCategory == 'curated') {
         await provider.loadCuratedWallpapers(page: _currentPage);
       } else if (currentCategory == 'search') {
-        // برای جستجو باید query را ذخیره کنید
-        await provider.searchWallpapers(_lastSearchQuery, page: _currentPage);
+        await provider.searchWallpapers(provider.searchQuery, page: _currentPage);
       } else {
         await provider.loadCategoryWallpapers(currentCategory, page: _currentPage);
       }
     } catch (e) {
-      // خطا را مدیریت کنید
-      print('Error loading more: $e');
       _currentPage--;
     } finally {
       setState(() {
@@ -210,8 +215,9 @@ class _WallpaperGridState extends State<WallpaperGrid> {
                 if (provider.currentCategory == 'curated') {
                   await provider.loadCuratedWallpapers();
                 } else if (provider.currentCategory == 'search') {
-                  // برای refresh باید query را داشته باشیم
-                  await provider.searchWallpapers(_lastSearchQuery);
+                  await provider.searchWallpapers(provider.searchQuery);
+                } else if (provider.currentCategory == 'favorites') {
+                  // Favorites are local; nothing to refresh from API
                 } else {
                   await provider.loadCategoryWallpapers(provider.currentCategory);
                 }

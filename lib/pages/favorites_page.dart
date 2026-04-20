@@ -14,7 +14,7 @@ class FavoritesPage extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text('Favorite Wallpapers'),
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.black,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),

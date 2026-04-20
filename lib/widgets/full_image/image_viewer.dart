@@ -207,9 +207,9 @@ class _ImageViewerState extends State<ImageViewer> {
               if (!kIsWeb) ...[
                 _isSettingWallpaper
                     ? Container(
-                  width: 56,
-                  height: 56,
-                  decoration: BoxDecoration(
+                  width: 48,
+                  height: 48,
+                  decoration: const BoxDecoration(
                     color: Colors.blue,
                     shape: BoxShape.circle,
                   ),
@@ -221,24 +221,30 @@ class _ImageViewerState extends State<ImageViewer> {
                   ),
                 )
                     : FloatingActionButton(
+                  heroTag: 'set_wallpaper_btn',
                   onPressed: _setAsWallpaper,
                   backgroundColor: Colors.blue,
                   mini: true,
+                  tooltip: 'Set as Wallpaper',
                   child: const Icon(Icons.wallpaper),
                 ),
                 const SizedBox(height: 10),
               ],
               FloatingActionButton(
+                heroTag: 'download_btn',
                 onPressed: _downloadWallpaper,
                 backgroundColor: Colors.green,
                 mini: true,
+                tooltip: 'Download',
                 child: const Icon(Icons.download),
               ),
               const SizedBox(height: 10),
               FloatingActionButton(
+                heroTag: 'share_btn',
                 onPressed: _shareWallpaper,
                 backgroundColor: Colors.orange,
                 mini: true,
+                tooltip: 'Share',
                 child: const Icon(Icons.share),
               ),
             ],

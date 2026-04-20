@@ -34,7 +34,7 @@ class LoadingIndicator extends StatelessWidget {
 }
 
 // TODO 77: Define loading indicator for grid items
-class GridLoadingIndicator extends StatelessWidget {
+class GridLoadingIndicator extends StatefulWidget {
   final int itemCount;
   final double aspectRatio;
 
@@ -45,25 +45,59 @@ class GridLoadingIndicator extends StatelessWidget {
   });
 
   @override
+  State<GridLoadingIndicator> createState() => _GridLoadingIndicatorState();
+}
+
+class _GridLoadingIndicatorState extends State<GridLoadingIndicator>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    )..repeat(reverse: true);
+    _animation = Tween<double>(begin: 0.3, end: 0.7).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(8),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-        childAspectRatio: aspectRatio,
-      ),
-      itemCount: itemCount,
-      itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            color: Colors.grey[800],
-            borderRadius: BorderRadius.circular(12),
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.all(8),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+            childAspectRatio: widget.aspectRatio,
           ),
-          child: const Center(
-            child: CircularProgressIndicator(color: Colors.white),
-          ),
+          itemCount: widget.itemCount,
+          itemBuilder: (context, index) {
+            return Container(
+              decoration: BoxDecoration(
+                color: Color.lerp(
+                  Colors.grey[900],
+                  Colors.grey[700],
+                  _animation.value,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+            );
+          },
         );
       },
     );

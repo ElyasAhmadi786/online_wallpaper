@@ -127,25 +127,35 @@ class _WallpapersPageState extends State<WallpapersPage> {
               if (provider.currentCategory != 'curated')
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  color: Colors.blue.withOpacity(0.2),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.withValues(alpha: 0.15),
+                    border: const Border(
+                      bottom: BorderSide(color: Colors.blue, width: 0.5),
+                    ),
+                  ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.category, color: Colors.blue, size: 16),
+                      const Icon(Icons.filter_list, color: Colors.blue, size: 18),
                       const SizedBox(width: 8),
-                      Text(
-                        'Category: ${provider.currentCategory}',
-                        style: const TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Text(
+                          provider.currentCategory == 'search'
+                              ? 'Search: "${provider.searchQuery}"'
+                              : 'Category: ${provider.currentCategory}',
+                          style: const TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const SizedBox(width: 16),
                       IconButton(
-                        icon: const Icon(Icons.close, color: Colors.blue, size: 16),
+                        icon: const Icon(Icons.close, color: Colors.blue, size: 18),
                         onPressed: _returnToCurated,
                         tooltip: 'Show Curated',
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
                       ),
                     ],
                   ),

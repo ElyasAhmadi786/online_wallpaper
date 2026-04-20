@@ -55,45 +55,58 @@ class _SearchDialogState extends State<SearchDialog> {
         style: TextStyle(color: Colors.white),
       ),
       backgroundColor: Colors.grey[900],
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       content: TextField(
         controller: _searchController,
         autofocus: true,
         style: const TextStyle(color: Colors.white),
+        textInputAction: TextInputAction.search,
         decoration: InputDecoration(
           hintText: 'Enter search term...',
-          hintStyle: const TextStyle(color: Colors.grey),
-          border: const OutlineInputBorder(),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.blue),
+          hintStyle: TextStyle(color: Colors.grey[500]),
+          filled: true,
+          fillColor: Colors.grey[850],
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
           ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Colors.blue, width: 1.5),
+          ),
+          prefixIcon: const Icon(Icons.search, color: Colors.grey),
           suffixIcon: _isSearching
               ? const Padding(
-            padding: EdgeInsets.all(12.0),
-            child: CircularProgressIndicator(strokeWidth: 2),
-          )
-              : IconButton(
-            icon: const Icon(Icons.search, color: Colors.blue),
-            onPressed: _performSearch,
-          ),
+                  padding: EdgeInsets.all(14.0),
+                  child: SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.blue),
+                  ),
+                )
+              : null,
         ),
         onSubmitted: (value) => _performSearch(),
       ),
+      actionsPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text(
-            'Cancel',
-            style: TextStyle(color: Colors.white),
-          ),
+          child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
         ),
         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          ),
           onPressed: _isSearching ? null : _performSearch,
           child: _isSearching
               ? const SizedBox(
-            width: 16,
-            height: 16,
-            child: CircularProgressIndicator(strokeWidth: 2),
-          )
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                )
               : const Text('Search'),
         ),
       ],
