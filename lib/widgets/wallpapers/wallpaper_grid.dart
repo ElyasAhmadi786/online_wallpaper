@@ -78,9 +78,9 @@ class _WallpaperGridState extends State<WallpaperGrid> {
     final provider = Provider.of<AppProvider>(context, listen: false);
     final currentCategory = provider.currentCategory;
 
-    // Favorites are fully local — no API pagination needed
+    // Favorites are stored locally; all items are already loaded so there
+    // is nothing to fetch from the API when the user scrolls to the end.
     if (currentCategory == 'favorites') return;
-
     setState(() {
       _isLoadingMore = true;
     });

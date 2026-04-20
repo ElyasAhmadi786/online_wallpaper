@@ -75,7 +75,7 @@ class _SearchDialogState extends State<SearchDialog> {
             borderRadius: BorderRadius.circular(12),
             borderSide: const BorderSide(color: Colors.blue, width: 1.5),
           ),
-          prefixIcon: const Icon(Icons.search, color: Colors.grey),
+          prefixIcon: Icon(Icons.search, color: Colors.grey[500]),
           suffixIcon: _isSearching
               ? const Padding(
                   padding: EdgeInsets.all(14.0),

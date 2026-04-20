@@ -77,6 +77,8 @@ class _GridLoadingIndicatorState extends State<GridLoadingIndicator>
       animation: _animation,
       builder: (context, child) {
         return GridView.builder(
+          // Non-scrollable: this widget is only shown while the actual
+          // scrollable grid is loading; it acts as a placeholder skeleton.
           physics: const NeverScrollableScrollPhysics(),
           padding: const EdgeInsets.all(8),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

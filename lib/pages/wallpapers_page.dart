@@ -154,6 +154,7 @@ class _WallpapersPageState extends State<WallpapersPage> {
                         icon: const Icon(Icons.close, color: Colors.blue, size: 18),
                         onPressed: _returnToCurated,
                         tooltip: 'Show Curated',
+                        // Zero padding/constraints to keep the banner compact
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
                       ),
