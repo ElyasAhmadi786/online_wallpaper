@@ -37,3 +37,18 @@ A modern, modular Flutter wallpaper application built with clean architecture pr
 <img width="342" height="575" alt="Screenshot 2025-12-03 222717" src="https://github.com/user-attachments/assets/08bd29a8-8c2a-4853-ad28-ac796ebce940" />
 <img width="346" height="581" alt="Screenshot 2025-12-03 222615" src="https://github.com/user-attachments/assets/9251f229-855f-4434-b943-fef936ab7808" />
 <img width="347" height="575" alt="Screenshot 2025-12-03 222553" src="https://github.com/user-attachments/assets/cba61d39-017b-408b-a40c-0238583af53a" />
+
+## 🚀 Release Build Notes
+
+- This app now expects the Pexels API key at build/run time:
+  - `--dart-define=PEXELS_API_KEY=YOUR_KEY`
+- Android release signing must be configured with your real upload keystore before Play Store upload.
+- App identifiers are set for production:
+  - Android: `com.elyasahmadi786.online_wallpaper`
+  - iOS: `com.elyasahmadi786.onlinewallpaper`
+- Use HTTPS-only network traffic in production (cleartext disabled).
+
+## 📝 Store Submission
+
+- Privacy policy: see `/PRIVACY_POLICY.md`
+- Full store checklist: see `/STORE_SUBMISSION_CHECKLIST.md`
