@@ -1,4 +1,4 @@
-name: online_walpaper
+name: online_wallpaper
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -50,7 +50,6 @@ dependencies:
   path_provider: ^2.1.1
   # Step 6: Sharing and permissions
   share_plus: ^12.0.1
-  permission_handler: ^12.0.1
   # Step 7: State management (optional)
   provider: ^6.1.1
   cross_file: ^0.3.1

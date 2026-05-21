@@ -1,7 +1,7 @@
 // TODO 52: Define application constants
 class AppConstants {
   // TODO 53: API Constants
-  static const String apiKey = 'kCvMGYbKdtzok8mHlznVnGcUXCRBfVkjdtoQ8Vc9TT3L8o6gKCE8vbJf';
+  static const String apiKey = String.fromEnvironment('PEXELS_API_KEY');
   static const String baseUrl = 'https://api.pexels.com/v1';
   static const int itemsPerPage = 30;
 

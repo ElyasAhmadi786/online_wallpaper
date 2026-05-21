@@ -8,12 +8,17 @@ import '../models/api_response_model.dart';
 // TODO 17: Define API Service class
 class ApiService {
   static const String _baseUrl = 'https://api.pexels.com/v1';
-  static const String _apiKey = 'kCvMGYbKdtzok8mHlznVnGcUXCRBfVkjdtoQ8Vc9TT3L8o6gKCE8vbJf';
+  static const String _apiKey = String.fromEnvironment('PEXELS_API_KEY');
 
   // TODO 18: Create headers for API requests
-  Map<String, String> get _headers => {
-    'Authorization': _apiKey,
-  };
+  Map<String, String> get _headers {
+    if (_apiKey.isEmpty) {
+      throw StateError(
+        'PEXELS_API_KEY is missing. Build/run with --dart-define=PEXELS_API_KEY=your_key',
+      );
+    }
+    return {'Authorization': _apiKey};
+  }
 
   // TODO 19: Fetch curated wallpapers
   Future<ApiResponse> getCuratedWallpapers({int page = 1, int perPage = 30}) async {

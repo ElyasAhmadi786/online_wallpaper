@@ -1,6 +1,5 @@
 // TODO 28: Import necessary packages
 import 'dart:io';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:wallpaper_manager_plus/wallpaper_manager_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -16,14 +15,11 @@ class WallpaperService {
     if (kIsWeb) {
       throw Exception('Wallpaper setting is not supported on web');
     }
+    if (!Platform.isAndroid) {
+      throw Exception('Wallpaper setting is currently supported only on Android');
+    }
 
     try {
-      // Check storage permission
-      var status = await Permission.storage.request();
-      if (!status.isGranted) {
-        throw Exception('Storage permission is required to set wallpapers');
-      }
-
       // Download image to temporary file
       var response = await http.get(Uri.parse(imageUrl));
       if (response.statusCode != 200) {
